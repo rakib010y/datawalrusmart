@@ -47,7 +47,7 @@ export default function Home() {
       )}
 
       <footer style={{ marginTop: '50px', color: '#9ca3af' }}>
-        Built by <strong>Rahim</strong> for <strong>Walrus Haulout 2025</strong>
+        Built by <strong>Rakib</strong> for <strong>Walrus Haulout 2025</strong>
       </footer>
     </div>
   );
