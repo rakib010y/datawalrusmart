@@ -1,54 +1,46 @@
 'use client';
+import { useWallet } from '@suiet/wallet-kit';  // Wallet hook
 import { useState } from 'react';
 
 export default function Home() {
-  const [file, setFile] = useState(null);
-  const [price, setPrice] = useState('');
+  const { connected, connect, account } = useWallet();  // Wallet স্টেট
   const [status, setStatus] = useState('');
 
+  const handleConnect = async () => {
+    try {
+      await connect();  // Wallet কানেক্ট করো
+      if (connected) {
+        setStatus(`Wallet Connected! Address: ${account.address}`);
+      }
+    } catch (error) {
+      setStatus('Connection failed. Try again!');
+    }
+  };
+
   const handleSell = () => {
-    setStatus(`Uploaded to Walrus! CID: walrus://abc123\nNFT Minted on Sui! ID: 0x789\nPrice: ${price} SUI\nReady for sale!`);
+    if (!connected) {
+      setStatus('Please connect wallet first!');
+      return;
+    }
+    setStatus(`Uploaded to Walrus! CID: walrus://abc123\nNFT Minted! Address: ${account.address}`);
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial', textAlign: 'center', background: '#f4f6f8', minHeight: '100vh' }}>
-      <h1 style={{ color: '#1a56db', fontSize: '2.5rem' }}>DataWalrusMart</h1>
-      <p style={{ color: '#6b7280' }}>Sell your data as NFT on Sui!</p>
-
-      <button style={{ background: '#4361ee', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px', fontSize: '1rem' }}>
-        Connect Sui Wallet
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h1>DataWalrusMart</h1>
+      <button onClick={handleConnect} style={{ background: '#4361ee', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px' }}>
+        {connected ? 'Wallet Connected' : 'Connect Sui Wallet'}
       </button>
-
-      <div style={{ margin: '30px 0' }}>
-        <input 
-          type="file" 
-          onChange={(e) => setFile(e.target.files[0])}
-          style={{ display: 'block', margin: '10px auto' }}
-        />
-        <input 
-          type="number" 
-          placeholder="Price in SUI" 
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          style={{ padding: '10px', width: '200px', margin: '10px auto', display: 'block' }}
-        />
-        <button 
-          onClick={handleSell}
-          style={{ background: '#38a169', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px', fontSize: '1rem' }}
-        >
-          Sell Data as NFT
-        </button>
-      </div>
-
-      {status && (
-        <pre style={{ background: '#e5e7eb', padding: '15px', borderRadius: '8px', margin: '20px auto', maxWidth: '400px', textAlign: 'left' }}>
-          {status}
-        </pre>
-      )}
-
-      <footer style={{ marginTop: '50px', color: '#9ca3af' }}>
-        Built by <strong>Rakib</strong> for <strong>Walrus Haulout 2025</strong>
-      </footer>
+      <br /><br />
+      <input type="file" />
+      <br /><br />
+      <input type="number" placeholder="Price in SUI" />
+      <br /><br />
+      <button onClick={handleSell} style={{ background: '#38a169', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px' }}>
+        Sell Data as NFT
+      </button>
+      <pre style={{ marginTop: '20px', background: '#f3f4f6', padding: '10px' }}>{status}</pre>
+      <footer>Built by Rakib for Walrus Haulout 2025</footer>
     </div>
   );
-    }
+}
