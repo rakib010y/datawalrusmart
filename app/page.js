@@ -1,9 +1,10 @@
 'use client';
 
-import { ConnectButton, useWallet } from '@suiet/wallet-kit';
+import { WalletProvider, ConnectButton, useWallet } from '@suiet/wallet-kit';
+import '@suiet/wallet-kit/style.css';
 import { useState } from 'react';
 
-export default function Home() {
+function HomeContent() {
   const { connected, account } = useWallet();
   const [status, setStatus] = useState('');
 
@@ -12,9 +13,7 @@ export default function Home() {
       setStatus('Please connect wallet first!');
       return;
     }
-    setStatus(
-      `Uploaded to Walrus! CID: walrus://abc123\nNFT Minted! Address: ${account?.address}`
-    );
+    setStatus(`Uploaded to Walrus! CID: walrus://abc123\nNFT Minted! Address: ${account?.address}`);
   };
 
   return (
@@ -40,7 +39,6 @@ export default function Home() {
       >
         Sell Data as NFT
       </button>
-
       {status && (
         <pre
           style={{
@@ -56,10 +54,17 @@ export default function Home() {
           {status}
         </pre>
       )}
-
       <footer style={{ marginTop: '3rem', color: '#666', fontSize: '0.9rem' }}>
-        Built by <strong>Rakib</strong> from Bangladesh for Walrus Haulout 2025
+        Built by <strong>Rakib</strong> for Walrus Haulout 2025
       </footer>
     </div>
   );
 }
+
+export default function Home() {
+  return (
+    <WalletProvider>
+      <HomeContent />
+    </WalletProvider>
+  );
+  }
