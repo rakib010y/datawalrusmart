@@ -1,21 +1,11 @@
-'use client';
-import { useWallet } from '@suiet/wallet-kit';  // Wallet hook
+'use client';  // এটাও অবশ্যই লাগবে
+
+import { ConnectButton, useWallet } from '@suiet/wallet-kit';
 import { useState } from 'react';
 
 export default function Home() {
-  const { connected, connect, account } = useWallet();  // Wallet স্টেট
+  const { connected, account } = useWallet();  // Wallet স্টেট
   const [status, setStatus] = useState('');
-
-  const handleConnect = async () => {
-    try {
-      await connect();  // Wallet কানেক্ট করো
-      if (connected) {
-        setStatus(`Wallet Connected! Address: ${account.address}`);
-      }
-    } catch (error) {
-      setStatus('Connection failed. Try again!');
-    }
-  };
 
   const handleSell = () => {
     if (!connected) {
@@ -28,9 +18,7 @@ export default function Home() {
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
       <h1>DataWalrusMart</h1>
-      <button onClick={handleConnect} style={{ background: '#4361ee', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px' }}>
-        {connected ? 'Wallet Connected' : 'Connect Sui Wallet'}
-      </button>
+      <ConnectButton />  // এটা রিয়েল কানেক্ট বাটন
       <br /><br />
       <input type="file" />
       <br /><br />
@@ -43,4 +31,4 @@ export default function Home() {
       <footer>Built by Rakib for Walrus Haulout 2025</footer>
     </div>
   );
-}
+  }
