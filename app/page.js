@@ -1,10 +1,10 @@
-'use client';  // এটাও অবশ্যই লাগবে
+'use client';
 
 import { ConnectButton, useWallet } from '@suiet/wallet-kit';
 import { useState } from 'react';
 
 export default function Home() {
-  const { connected, account } = useWallet();  // Wallet স্টেট
+  const { connected, account } = useWallet();
   const [status, setStatus] = useState('');
 
   const handleSell = () => {
@@ -12,13 +12,13 @@ export default function Home() {
       setStatus('Please connect wallet first!');
       return;
     }
-    setStatus(`Uploaded to Walrus! CID: walrus://abc123\nNFT Minted! Address: ${account.address}`);
+    setStatus(`Uploaded to Walrus! CID: walrus://abc123\nNFT Minted! Address: ${account?.address}`);
   };
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
+    <div style={{ padding: '20px', textAlign: 'center', fontFamily: 'Arial' }}>
       <h1>DataWalrusMart</h1>
-      <ConnectButton />  // এটা রিয়েল কানেক্ট বাটন
+      <ConnectButton />
       <br /><br />
       <input type="file" />
       <br /><br />
@@ -27,8 +27,14 @@ export default function Home() {
       <button onClick={handleSell} style={{ background: '#38a169', color: 'white', padding: '12px 24px', border: 'none', borderRadius: '8px' }}>
         Sell Data as NFT
       </button>
-      <pre style={{ marginTop: '20px', background: '#f3f4f6', padding: '10px' }}>{status}</pre>
-      <footer>Built by Rakib for Walrus Haulout 2025</footer>
+      {status && (
+        <pre style={{ marginTop: '20px', background: '#f3f4f6', padding: '10px', whiteSpace: 'pre-wrap' }}>
+          {status}
+        </pre>
+      )}
+      <p style={{ marginTop: '2rem', color: '#666', fontSize: '0.9rem' }}>
+        Built by <strong>Rakib</strong> for Walrus Haulout 2025
+      </p>
     </div>
   );
-  }
+}
