@@ -1,8 +1,8 @@
-# DataWalrusMart – AI দিয়ে বানানো ডেটা মার্কেটপ্লেস
+# DataWalrusMart 
 
 **Walrus Haulout Hackathon 2025**  
 **Track:** Data Economy & Marketplaces  
-**Builder:** Rahim (Bangladesh)
+**Builder:** Rakib(Bangladesh)
 
 ## ফিচারস
 - Walrus-এ ফাইল আপলোড → CID
@@ -13,5 +13,4 @@
 
 ## ডেপ্লয়
 [https://datawalrusmart.vercel.app]
-
-Built with **Bolt.new AI** + Love from Bangladesh
+Love from Bangladesh
